@@ -160,6 +160,7 @@
       <button onclick="dailyFortune()">🔮 행운 뽑기</button>
       <button onclick="bubblePlay()">🫧 비눗방울</button>
       <button onclick="playCuteVoice()">🔊 요정 목소리</button>
+      <button onclick="giveFood()">🥘 배고푸지?</button>
       <button onclick="resetPlayground()">🔄 다시 시작</button>
     </div>
 
@@ -168,6 +169,40 @@
 
 <script>
   const output = document.getElementById("output");
+
+  // ... (이전 함수들 유지) ...
+
+  // 10. 음식 소환 (배고푸지?)
+  function giveFood() {
+    const foodItems = [
+      { name: "매콤달콤 떡볶이", url: "https://images.unsplash.com/photo-1623653387945-2fd25214f8fc?w=300&h=300&fit=crop" },
+      { name: "육즙가득 햄버거", url: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&h=300&fit=crop" },
+      { name: "얼큰한 훠궈", url: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=300&h=300&fit=crop" },
+      { name: "돌돌말이 스파게티", url: "https://images.unsplash.com/photo-1516100882582-96c3a05fe590?w=300&h=300&fit=crop" },
+      { name: "싱싱한 회", url: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=300&h=300&fit=crop" },
+      { name: "지글지글 고기", url: "https://images.unsplash.com/photo-1544025162-d76694265947?w=300&h=300&fit=crop" }
+    ];
+
+    const food = foodItems[Math.floor(Math.random() * foodItems.length)];
+    const card = document.createElement("div");
+    card.className = "pet-card-image food-card"; // 기존 스타일 재사용
+    card.style.left = Math.random() * 70 + 15 + "%";
+    card.style.top = Math.random() * 60 + 20 + "%";
+    
+    card.innerHTML = `
+      <img src="${food.url}" alt="${food.name}">
+      <div class="pet-label">${food.name} 도착! 😋</div>
+    `;
+    
+    document.body.appendChild(card);
+    output.innerText = `🥘 예둥아, 맛있는 ${food.name} 먹고 힘내!`;
+
+    setTimeout(() => {
+      card.style.opacity = "0";
+      card.style.transform = "scale(0.5) translateY(20px)";
+      setTimeout(() => card.remove(), 500);
+    }, 3000);
+  }
 
   // 1. 랜덤 메시지
   function randomMessage() {
