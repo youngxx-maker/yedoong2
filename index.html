@@ -277,16 +277,16 @@
   // 3. 펫 소환
   function summonPets() {
     const petImages = [
-      "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?w=300&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=300&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=300&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1591160674255-fc33bb68997a?w=300&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=300&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=300&h=300&fit=crop"
+      "https://images.unsplash.com/photo-1590691566903-692bf5ca7678?w=300&h=300&fit=crop", // 공룡
+      "https://images.unsplash.com/photo-1582063283625-780c8d19736f?w=300&h=300&fit=crop", // 여우
+      "https://images.unsplash.com/photo-1615403219803-0870938f2258?w=300&h=300&fit=crop", // 곰
+      "https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?w=300&h=300&fit=crop", // 유니콘
+      "https://images.unsplash.com/photo-1583511666407-5f06ec33f042?w=300&h=300&fit=crop", // 강아지
+      "https://images.unsplash.com/photo-1606903103940-02830f3a6190?w=300&h=300&fit=crop"  // 토끼
     ];
-    
+
     const randomImg = petImages[Math.floor(Math.random() * petImages.length)];
+
     const card = document.createElement("div");
     card.className = "pet-card-image";
     card.style.left = Math.random() * 70 + 15 + "%";
@@ -396,7 +396,7 @@
   function playCuteVoice() {
     const scripts = [
       "예둥아, 오늘도 정말 정말 사랑해!",
-      "예리쌤은 예둥이가 제일 좋대요!",
+      "영둥이는 예둥이가 제일 좋대요!",
       "넌 언제나 반짝이는 소중한 아이야!",
       "기분 좋은 하루 보내, 예둥아!",
       "우와아, 예둥이다! 안녕?"
