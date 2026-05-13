@@ -149,19 +149,19 @@
 </head>
 <body>
 
-  <div class="container">
-    <h1>🎁 예둥이 놀이터 🎁</h1>
+  <!-- 랜딩 페이지 -->
+  <div id="landing" class="container">
+    <h1>🎈 예둥이 놀이터 🎈</h1>
+    <p style="font-size: 1.5rem; color: #555; margin-bottom: 30px;">예둥아 노올자~ ✨</p>
+    <button onclick="enterPlayground()" style="width: 100%; font-size: 1.5rem; padding: 20px;">🎮 놀러가기</button>
+  </div>
+
+  <!-- 놀이터 페이지 (초기에는 숨김) -->
+  <div id="playground" class="container" style="display: none;">
+    <h1 id="playground-title">🎁 예둥이 놀이터 🎁</h1>
     
-    <div class="button-grid">
-      <button onclick="randomMessage()">💌 마음 전달</button>
-      <button onclick="changeBackground()">🌈 마법 배경</button>
-      <button onclick="summonPets()">🐾 펫 소환</button>
-      <button onclick="showParty()">🎊 축하 파티</button>
-      <button onclick="dailyFortune()">🔮 행운 뽑기</button>
-      <button onclick="bubblePlay()">🫧 비눗방울</button>
-      <button onclick="playCuteVoice()">🔊 요정 목소리</button>
-      <button onclick="giveFood()">🥘 배고푸지?</button>
-      <button onclick="resetPlayground()">🔄 다시 시작</button>
+    <div id="button-grid" class="button-grid">
+      <!-- 버튼들이 여기에 동적으로 생성됩니다 -->
     </div>
 
     <div id="output">오늘도 즐거운 하루 보내세요! ✨</div>
@@ -169,8 +169,44 @@
 
 <script>
   const output = document.getElementById("output");
+  const landing = document.getElementById("landing");
+  const playground = document.getElementById("playground");
+  const buttonGrid = document.getElementById("button-grid");
 
-  // ... (이전 함수들 유지) ...
+  // 놀이터 입장 함수
+  function enterPlayground() {
+    landing.style.display = "none";
+    playground.style.display = "block";
+    generateRandomButtons();
+    showParty(); // 입장 축하 효과
+  }
+
+  // 놀이 버튼들 정의
+  const playActions = [
+    { text: "💌 마음 전달", func: randomMessage },
+    { text: "🌈 마법 배경", func: changeBackground },
+    { text: "🐾 펫 소환", func: summonPets },
+    { text: "🎊 축하 파티", func: showParty },
+    { text: "🔮 행운 뽑기", func: dailyFortune },
+    { text: "🫧 비눗방울", func: bubblePlay },
+    { text: "🔊 요정 목소리", func: playCuteVoice },
+    { text: "🥘 배고푸지?", func: giveFood },
+    { text: "🔄 처음으로", func: () => location.reload() }
+  ];
+
+  // 버튼들을 랜덤하게 생성하는 함수
+  function generateRandomButtons() {
+    buttonGrid.innerHTML = "";
+    // 버튼 순서 섞기
+    const shuffledActions = [...playActions].sort(() => Math.random() - 0.5);
+    
+    shuffledActions.forEach(action => {
+      const btn = document.createElement("button");
+      btn.innerText = action.text;
+      btn.onclick = action.func;
+      buttonGrid.appendChild(btn);
+    });
+  }
 
   // 10. 음식 소환 (배고푸지?)
   function giveFood() {
@@ -185,7 +221,7 @@
 
     const food = foodItems[Math.floor(Math.random() * foodItems.length)];
     const card = document.createElement("div");
-    card.className = "pet-card-image food-card"; // 기존 스타일 재사용
+    card.className = "pet-card-image food-card";
     card.style.left = Math.random() * 70 + 15 + "%";
     card.style.top = Math.random() * 60 + 20 + "%";
     
@@ -238,16 +274,16 @@
     output.innerText = "🌈 마법이 일어나 배경이 바뀌었어요!";
   }
 
-  // 3. 펫 소환 (실제 이미지 버전)
+  // 3. 펫 소환
   function summonPets() {
     const petImages = [
-      "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?w=300&h=300&fit=crop", // 강아지
-      "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=300&h=300&fit=crop", // 고양이
-      "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=300&h=300&fit=crop", // 선글라스 고양이
-      "https://images.unsplash.com/photo-1591160674255-fc33bb68997a?w=300&h=300&fit=crop", // 리트리버
-      "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=300&h=300&fit=crop", // 옷 입은 강아지
-      "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300&h=300&fit=crop", // 아기 고양이
-      "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=300&h=300&fit=crop"  // 귀여운 동물
+      "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?w=300&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=300&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=300&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1591160674255-fc33bb68997a?w=300&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=300&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=300&h=300&fit=crop"
     ];
     
     const randomImg = petImages[Math.floor(Math.random() * petImages.length)];
@@ -262,7 +298,6 @@
     `;
     
     document.body.appendChild(card);
-    
     output.innerText = `🐾 와! 진짜 귀여운 친구가 나타났어요!`;
     
     setTimeout(() => {
@@ -272,7 +307,7 @@
     }, 3000);
   }
 
-  // 스타일 추가 (기존 style 블록에 추가되도록 스크립트로 주입)
+  // 스타일 주입
   const imageStyle = document.createElement("style");
   imageStyle.innerHTML = `
     .pet-card-image {
@@ -290,21 +325,18 @@
       align-items: center;
       border: 4px solid white;
     }
-
     .pet-card-image img {
       width: 100%;
       height: 160px;
-      object-fit: crop;
+      object-fit: cover;
       border-radius: 15px;
     }
-
     .pet-label {
       margin-top: 8px;
       font-size: 14px;
       font-weight: bold;
       color: #ff4d6d;
     }
-
     @keyframes imagePopIn {
       0% { transform: scale(0) rotate(-15deg); opacity: 0; }
       100% { transform: scale(1) rotate(0deg); opacity: 1; }
@@ -360,57 +392,22 @@
     output.innerText = "🫧 톡톡! 비눗방울이 떠다녀요!";
   }
 
-  // 7. 요정 목소리 (TTS)
+  // 7. 요정 목소리
   function playCuteVoice() {
     const scripts = [
       "예둥아, 오늘도 정말 정말 사랑해!",
       "예리쌤은 예둥이가 제일 좋대요!",
       "넌 언제나 반짝이는 소중한 아이야!",
       "기분 좋은 하루 보내, 예둥아!",
-      "우와아, 예둥이다! 안녕?",
-      "예리쌤 예리쌤 피아노방에서 빵먹지 말랬지"
+      "우와아, 예둥이다! 안녕?"
     ];
     const script = scripts[Math.floor(Math.random() * scripts.length)];
-    
     const utterance = new SpeechSynthesisUtterance(script);
     utterance.lang = 'ko-KR';
-
-    // 최적의 목소리 선택 로직
-    const voices = window.speechSynthesis.getVoices();
-    
-    // 한국어 음성 필터링
-    const koVoices = voices.filter(v => v.lang.includes('ko'));
-    
-    // 우선순위: 1. Google 한국어, 2. Natural(자연스러운) 음성, 3. 첫 번째 한국어 음성
-    const preferredVoice = koVoices.find(v => v.name.includes('Google')) || 
-                           koVoices.find(v => v.name.includes('Natural')) || 
-                           koVoices[0];
-
-    if (preferredVoice) {
-      utterance.voice = preferredVoice;
-    }
-
-    // 귀엽고 자연스러운 톤으로 조정
-    utterance.pitch = 1.3; // 너무 높지 않으면서 귀여운 톤
-    utterance.rate = 1.0;  // 표준 속도로 더 자연스럽게
-    
+    utterance.pitch = 1.3;
     window.speechSynthesis.speak(utterance);
     output.innerText = `🔊 요정: "${script}"`;
     createFloatingElement("🎙️");
-  }
-
-  // 브라우저에서 음성 목록이 로드되는 시점이 다를 수 있어 미리 호출
-  window.speechSynthesis.onvoiceschanged = () => {
-    window.speechSynthesis.getVoices();
-  };
-
-  // 8. 다시 시작
-  function resetPlayground() {
-    document.body.style.background = "linear-gradient(135deg, #ffd6e0, #d6f0ff)";
-    output.innerText = "🔄 다시 신나게 놀아볼까요?";
-    // 떠다니는 것들 다 지우기
-    const elements = document.querySelectorAll(".pet-card, .floating-element, .confetti");
-    elements.forEach(el => el.remove());
   }
 
   // 유틸리티: 떠다니는 이모지 생성
