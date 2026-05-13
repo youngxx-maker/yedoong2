@@ -276,29 +276,27 @@
 
   // 3. 펫 소환
   function summonPets() {
-    const petImages = [
-      "https://images.unsplash.com/photo-1615403219803-0870938f2258?w=400&h=400&fit=crop", // 핑크 곰돌이 일러스트
-      "https://images.unsplash.com/photo-1583511666407-5f06ec33f042?w=400&h=400&fit=crop", // 귀여운 갈색 강아지 캐릭터
-      "https://images.unsplash.com/photo-1590691566903-692bf5ca7678?w=400&h=400&fit=crop", // 초록색 공룡 캐릭터
-      "https://images.unsplash.com/photo-1582063283625-780c8d19736f?w=400&h=400&fit=crop", // 주황색 여우 캐릭터
-      "https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?w=400&h=400&fit=crop", // 유니콘 캐릭터
-      "https://images.unsplash.com/photo-1590691566903-692bf5ca7678?w=400&h=400&fit=crop"  // 귀여운 공룡 (중복 방지용 다른 앵글/크롭 고려)
+    const pets = [
+      { name: "멍멍 강아지", url: "https://img.icons8.com/bubbles/200/dog.png", emoji: "🐶" },
+      { name: "야옹 고양이", url: "https://img.icons8.com/bubbles/200/cat.png", emoji: "🐱" },
+      { name: "꽥꽥 오리", url: "https://img.icons8.com/bubbles/200/duck.png", emoji: "🦆" },
+      { name: "둥둥 곰돌이", url: "https://img.icons8.com/bubbles/200/bear.png", emoji: "🐻" },
+      { name: "깡충 토끼", url: "https://img.icons8.com/bubbles/200/rabbit.png", emoji: "🐰" }
     ];
 
-    const randomImg = petImages[Math.floor(Math.random() * petImages.length)];
-
+    const pet = pets[Math.floor(Math.random() * pets.length)];
     const card = document.createElement("div");
     card.className = "pet-card-image";
     card.style.left = Math.random() * 70 + 15 + "%";
     card.style.top = Math.random() * 60 + 20 + "%";
     
     card.innerHTML = `
-      <img src="${randomImg}" alt="귀여운 펫">
-      <div class="pet-label">귀요미 등장! ✨</div>
+      <img src="${pet.url}" alt="${pet.name}" onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>${pet.emoji}</text></svg>';">
+      <div class="pet-label">${pet.name} 등장! ✨</div>
     `;
     
     document.body.appendChild(card);
-    output.innerText = `🐾 와! 진짜 귀여운 친구가 나타났어요!`;
+    output.innerText = `🐾 와! 귀여운 ${pet.name} 친구가 나타났어요!`;
     
     setTimeout(() => {
       card.style.opacity = "0";
