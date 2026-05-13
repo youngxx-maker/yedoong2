@@ -191,8 +191,41 @@
     { text: "🫧 비눗방울", func: bubblePlay },
     { text: "🔊 요정 목소리", func: playCuteVoice },
     { text: "🥘 배고푸지?", func: giveFood },
+    { text: "✈️ 여행가자", func: showTravel },
     { text: "🔄 처음으로", func: () => location.reload() }
   ];
+
+  // 11. 여행지 소환 (여행가자)
+  function showTravel() {
+    const destinations = [
+      { name: "낭만의 도시 파리", url: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400&h=400&fit=crop", emoji: "🗼" },
+      { name: "고즈넉한 교토", url: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400&h=400&fit=crop", emoji: "⛩️" },
+      { name: "화려한 뉴욕", url: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e3e9?w=400&h=400&fit=crop", emoji: "🗽" },
+      { name: "평화로운 발리", url: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&h=400&fit=crop", emoji: "🏝️" },
+      { name: "물의 도시 베네치아", url: "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=400&h=400&fit=crop", emoji: "🛶" },
+      { name: "요들송 스위스", url: "https://images.unsplash.com/photo-1531310197839-ccf54634509e?w=400&h=400&fit=crop", emoji: "🏔️" }
+    ];
+
+    const spot = destinations[Math.floor(Math.random() * destinations.length)];
+    const card = document.createElement("div");
+    card.className = "pet-card-image travel-card";
+    card.style.left = Math.random() * 70 + 15 + "%";
+    card.style.top = Math.random() * 60 + 20 + "%";
+    
+    card.innerHTML = `
+      <img src="${spot.url}" alt="${spot.name}" onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>${spot.emoji}</text></svg>';">
+      <div class="pet-label">${spot.name}로 떠나요! ✈️</div>
+    `;
+    
+    document.body.appendChild(card);
+    output.innerText = `✈️ 예둥아, 우리 ${spot.name}로 여행 갈까?`;
+
+    setTimeout(() => {
+      card.style.opacity = "0";
+      card.style.transform = "scale(0.5) translateY(20px)";
+      setTimeout(() => card.remove(), 500);
+    }, 4000);
+  }
 
   // 버튼들을 랜덤하게 생성하는 함수
   function generateRandomButtons() {
