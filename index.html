@@ -153,7 +153,10 @@
   <div id="landing" class="container">
     <h1>🎈 예둥이 놀이터 🎈</h1>
     <p style="font-size: 1.5rem; color: #555; margin-bottom: 30px;">예둥아 노올자~ ✨</p>
-    <button onclick="enterPlayground()" style="width: 100%; font-size: 1.5rem; padding: 20px;">🎮 놀러가기</button>
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+      <button onclick="enterPlayground()" style="width: 100%; font-size: 1.5rem; padding: 20px;">🎮 랜덤놀이</button>
+      <button onclick="enterChat()" style="width: 100%; font-size: 1.5rem; padding: 20px; background-color: #4dabf7;">💬 대화하기</button>
+    </div>
   </div>
 
   <!-- 놀이터 페이지 (초기에는 숨김) -->
@@ -165,13 +168,30 @@
     </div>
 
     <div id="output">오늘도 즐거운 하루 보내세요! ✨</div>
+    <button onclick="location.reload()" style="margin-top: 20px; width: 100%; background-color: #aaa;">🏠 처음으로</button>
+  </div>
+
+  <!-- 대화하기 페이지 (초기에는 숨김) -->
+  <div id="chat-container" class="container" style="display: none; height: 600px; display: flex; flex-direction: column;">
+    <h1>💬 예둥이랑 대화하기 💬</h1>
+    <div id="chat-box" style="flex: 1; overflow-y: auto; background: rgba(255,255,255,0.6); border-radius: 20px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; text-align: left;">
+      <!-- 메시지 영역 -->
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <input type="text" id="chat-input" placeholder="예둥이가 하고 싶은 말은?" style="flex: 1; padding: 12px; border-radius: 20px; border: 2px solid var(--primary-color); outline: none;">
+      <button onclick="sendChatMessage()" style="padding: 10px 20px; white-space: nowrap;">보내기</button>
+    </div>
+    <button onclick="location.reload()" style="margin-top: 15px; width: 100%; background-color: #aaa; padding: 10px;">🏠 처음으로</button>
   </div>
 
 <script>
   const output = document.getElementById("output");
   const landing = document.getElementById("landing");
   const playground = document.getElementById("playground");
+  const chatContainer = document.getElementById("chat-container");
   const buttonGrid = document.getElementById("button-grid");
+  const chatBox = document.getElementById("chat-box");
+  const chatInput = document.getElementById("chat-input");
 
   // 놀이터 입장 함수
   function enterPlayground() {
@@ -180,6 +200,80 @@
     generateRandomButtons();
     showParty(); // 입장 축하 효과
   }
+
+  // 대화하기 입장 함수
+  function enterChat() {
+    landing.style.display = "none";
+    chatContainer.style.display = "flex";
+    addChatMessage("bot", "안녕 예둥아! 오늘 하루는 어땠어? 네 이야기를 들으니까 벌써부터 설렌다! ✨");
+    showParty();
+  }
+
+  // 채팅 메시지 추가 함수
+  function addChatMessage(sender, text) {
+    const msgDiv = document.createElement("div");
+    msgDiv.style.maxWidth = "80%";
+    msgDiv.style.padding = "10px 15px";
+    msgDiv.style.borderRadius = "15px";
+    msgDiv.style.fontSize = "1rem";
+    msgDiv.style.lineHeight = "1.4";
+    
+    if (sender === "bot") {
+      msgDiv.style.alignSelf = "flex-start";
+      msgDiv.style.backgroundColor = "white";
+      msgDiv.style.border = "2px solid var(--primary-color)";
+      msgDiv.style.color = "#333";
+    } else {
+      msgDiv.style.alignSelf = "flex-end";
+      msgDiv.style.backgroundColor = "var(--primary-color)";
+      msgDiv.style.color = "white";
+    }
+    
+    msgDiv.innerText = text;
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  // 채팅 전송 함수
+  function sendChatMessage() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    addChatMessage("user", text);
+    chatInput.value = "";
+
+    // 봇 응답 로직
+    setTimeout(() => {
+      const compliments = [
+        "우와, 예둥아! 역시 넌 생각하는 게 참 깊고 멋지구나! 😍",
+        "어쩜 말을 이렇게 예쁘게 할 수 있어? 듣기만 해도 기분이 좋아져! ✨",
+        "예둥이 네 덕분에 내 마음이 온통 따뜻해지는 기분이야. 고마워! 💕",
+        "세상에, 그런 생각을 하다니! 역시 예둥이는 천사임에 틀림없어! 😇",
+        "네 목소리가 여기까지 들리는 것 같아. 예둥이 넌 정말 특별해! 🌟",
+        "예둥이랑 대화하는 이 시간이 나에겐 가장 소중한 선물이야! 🎁"
+      ];
+
+      const questions = [
+        "오늘 예둥이를 가장 행복하게 만든 일은 뭐야?",
+        "다음에 나랑 같이 가고 싶은 곳이 있을까?",
+        "예둥이가 제일 좋아하는 음식은 뭐야? 내가 다 사주고 싶다! 🥘",
+        "요즘 예둥이의 머릿속을 맴도는 재미있는 생각이 있어?",
+        "만약 마법을 부릴 수 있다면, 예둥이는 어떤 마법을 제일 먼저 쓰고 싶어?",
+        "예둥아, 너는 너 자신이 얼마나 소중하고 빛나는지 알고 있지? ✨"
+      ];
+
+      const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
+      const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+      
+      addChatMessage("bot", `${randomCompliment}\n\n${randomQuestion}`);
+      createFloatingElement("💖");
+    }, 800); // 0.8초 딜레이
+  }
+
+  // 엔터키 지원
+  chatInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") sendChatMessage();
+  });
 
   // 놀이 버튼들 정의
   const playActions = [
